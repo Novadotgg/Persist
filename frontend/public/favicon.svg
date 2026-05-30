@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 48 48">
+  <!-- Outer White Rounded Background -->
+  <rect width="48" height="48" fill="#FFFFFF" rx="14" />
+  
+  <!-- Centered Inner Yellow Smiley Robot Icon -->
+  <g transform="translate(6, 6)">
+    <rect width="36" height="36" fill="#FFD028" rx="10" />
+    <ellipse cx="12" cy="16.5" rx="3.5" ry="4.5" fill="#1C1C1E" />
+    <circle cx="11" cy="15" r="1" fill="#FFFFFF" />
+    <ellipse cx="24" cy="16.5" rx="3.5" ry="4.5" fill="#1C1C1E" />
+    <circle cx="23" cy="15" r="1" fill="#FFFFFF" />
+    <path d="M 15 23 Q 18 26 21 23" stroke="#1C1C1E" stroke-width="2" stroke-linecap="round" fill="none" />
+    <circle cx="8" cy="21" r="2" fill="#FF8D60" opacity="0.6" />
+    <circle cx="28" cy="21" r="2" fill="#FF8D60" opacity="0.6" />
+  </g>
+</svg>
