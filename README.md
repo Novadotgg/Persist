@@ -9,7 +9,7 @@
 **Persist** is a highly premium, local-first AI Personal Assistant orchestrating all your daily tools, notes, code, and communications. Powered by local LLMs via Ollama and a FastAPI backend agent, it offers a single, glassmorphic command center to manage your digital life with maximum privacy.
 
 <p align="center">
-  <img src="frontend/public/hero-bg.png" width="100%" alt="Persist Interface Mockup" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
+  <img src="frontend/public/image.png" width="100%" alt="Persist Interface Mockup" style="border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);" />
 </p>
 
 ---
