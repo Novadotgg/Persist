@@ -833,7 +833,7 @@ textarea {
   object-fit: cover;
   object-position: center 30%;
   opacity: 0.45;
-  animation: landing-bg-zoom 40s ease-in-out infinite;
+  animation: landing-bg-zoom 20s ease-in-out infinite;
 }
 
 @keyframes landing-bg-zoom {
