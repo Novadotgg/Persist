@@ -28,6 +28,8 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
   const [screenGlow, setScreenGlow] = useState(false)
   const [contentVisible, setContentVisible] = useState(false)
   const [authMode, setAuthMode] = useState<'preview' | 'login' | 'register'>('preview')
+  const [tilt, setTilt] = useState({ x: 0, y: 0 })
+  const logoRef = React.useRef<HTMLDivElement>(null)
 
   // Auth form state
   const [email, setEmail] = useState('')
@@ -43,6 +45,34 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
     const t2 = setTimeout(() => setScreenGlow(true), 1200)
     const t3 = setTimeout(() => setContentVisible(true), 1800)
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
+  }, [])
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!logoRef.current) return
+      const rect = logoRef.current.getBoundingClientRect()
+      const logoX = rect.left + rect.width / 2
+      const logoY = rect.top + rect.height / 2
+      
+      const dx = e.clientX - logoX
+      const dy = e.clientY - logoY
+      
+      const maxTilt = 20
+      const maxDistance = 600
+      const distance = Math.sqrt(dx * dx + dy * dy)
+      
+      if (distance < maxDistance) {
+        const factor = (maxDistance - distance) / maxDistance
+        const tiltX = -(dy / maxDistance) * maxTilt * factor
+        const tiltY = (dx / maxDistance) * maxTilt * factor
+        setTilt({ x: tiltX, y: tiltY })
+      } else {
+        setTilt({ x: 0, y: 0 })
+      }
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -167,6 +197,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
             }}
           >
             <div
+              ref={logoRef}
               style={{
                 width: '200px',
                 height: '200px',
@@ -179,6 +210,8 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
                 justifyContent: 'center',
                 background: 'var(--color-mercury-blue)',
                 flexShrink: 0,
+                transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+                transition: 'transform 0.1s cubic-bezier(0.25, 1, 0.5, 1)',
               }}
             >
               <video
@@ -282,18 +315,63 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
 
                         {/* CTA overlay on the preview */}
                         <div className="screen-preview-cta-overlay">
-                          <button
-                            className="screen-cta-btn primary"
-                            onClick={() => showAuth('login')}
+                          <div
+                            style={{
+                              background: 'rgba(255, 255, 255, 0.03)',
+                              border: '1px solid rgba(255, 255, 255, 0.08)',
+                              borderRadius: '20px',
+                              padding: '20px 28px',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'center',
+                              gap: '12px',
+                              backdropFilter: 'blur(16px)',
+                              boxShadow: '0 20px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)',
+                              animation: 'integrations-fade-up 0.5s ease',
+                              textAlign: 'center',
+                            }}
                           >
-                            Sign In
-                          </button>
-                          <button
-                            className="screen-cta-btn secondary"
-                            onClick={() => showAuth('register')}
-                          >
-                            Create Account
-                          </button>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              <div
+                                style={{
+                                  width: '24px',
+                                  height: '24px',
+                                  borderRadius: '7px',
+                                  overflow: 'hidden',
+                                  boxShadow: '0 2px 10px rgba(82,102,235,0.4)',
+                                  border: '1px solid rgba(82,102,235,0.2)',
+                                  background: 'var(--color-mercury-blue)',
+                                }}
+                              >
+                                <video
+                                  src="/icon.mp4"
+                                  autoPlay
+                                  loop
+                                  muted
+                                  playsInline
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                />
+                              </div>
+                              <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--color-starlight)', letterSpacing: '0.04em', fontFamily: 'var(--font-display)' }}>Persist</span>
+                            </div>
+                            <p style={{ fontSize: '11px', color: 'var(--color-lead)', margin: '0 0 4px', maxWidth: '200px', lineHeight: 1.4 }}>
+                              Configure 16+ integrations and run local privacy-first AI workflows.
+                            </p>
+                            <button
+                              className="screen-cta-btn primary"
+                              onClick={() => showAuth('login')}
+                              style={{ width: '150px', padding: '8px 0', fontSize: '12px' }}
+                            >
+                              Sign In
+                            </button>
+                            <button
+                              className="screen-cta-btn secondary"
+                              onClick={() => showAuth('register')}
+                              style={{ width: '150px', padding: '7px 0', fontSize: '12px' }}
+                            >
+                              Create Account
+                            </button>
+                          </div>
                         </div>
                       </div>
                     )}
