@@ -19,6 +19,7 @@ interface IntegrationCard {
   actionLabel: string
   isExpanded?: boolean
   badge?: string
+  guide?: string
 }
 
 function StatusIndicator({ active }: { active: boolean }) {
@@ -430,6 +431,7 @@ export default function IntegrationsPanel() {
       action: handleGoogleConnect,
       actionLabel: 'Connect Account',
       badge: 'Gmail · Calendar · Drive',
+      guide: 'OAuth credentials are configured on the backend. Click "Connect Account" to authenticate with your Google account.',
     },
     {
       id: 'google_maps',
@@ -443,6 +445,7 @@ export default function IntegrationsPanel() {
       action: toggle('google_maps'),
       actionLabel: tf('google_maps') ? 'Close Panel' : 'Configure',
       isExpanded: tf('google_maps'),
+      guide: 'Create a Google Cloud project, enable the Geocoding, Directions, and Places APIs, and copy your API Key from the Credentials section.',
     },
     {
       id: 'youtube',
@@ -456,6 +459,7 @@ export default function IntegrationsPanel() {
       action: toggle('youtube'),
       actionLabel: tf('youtube') ? 'Close Panel' : 'Configure',
       isExpanded: tf('youtube'),
+      guide: 'Enable the YouTube Data API v3 in your Google Cloud Console, and generate an API Key in the Credentials tab.',
     },
     // ── Productivity ──
     {
@@ -470,6 +474,7 @@ export default function IntegrationsPanel() {
       action: toggle('notion'),
       actionLabel: tf('notion') ? 'Close Panel' : 'Configure',
       isExpanded: tf('notion'),
+      guide: 'Go to developers.notion.com, click "View My Integrations", create a new internal integration, and copy its Internal Integration Token.',
     },
     {
       id: 'todoist',
@@ -483,6 +488,7 @@ export default function IntegrationsPanel() {
       action: toggle('todoist'),
       actionLabel: tf('todoist') ? 'Close Panel' : 'Configure',
       isExpanded: tf('todoist'),
+      guide: 'Log in to Todoist on the web, go to Settings > Integrations > Developer tab, and copy your API Token.',
     },
     {
       id: 'jira',
@@ -496,6 +502,7 @@ export default function IntegrationsPanel() {
       action: toggle('jira'),
       actionLabel: tf('jira') ? 'Close Panel' : 'Configure',
       isExpanded: tf('jira'),
+      guide: 'Generate an API Token at id.atlassian.com/manage-profile/security/api-tokens. Format required: "email:api-token".',
     },
     // ── Communication ──
     {
@@ -510,6 +517,7 @@ export default function IntegrationsPanel() {
       action: toggle('telegram'),
       actionLabel: tf('telegram') ? 'Close Panel' : 'Configure',
       isExpanded: tf('telegram'),
+      guide: 'Create a bot by messaging @BotFather on Telegram to get a Bot Token. To find your Chat ID, send a message to @userinfobot.',
     },
     {
       id: 'discord',
@@ -523,6 +531,7 @@ export default function IntegrationsPanel() {
       action: toggle('discord'),
       actionLabel: tf('discord') ? 'Close Panel' : 'Configure',
       isExpanded: tf('discord'),
+      guide: 'Go to discord.com/developers/applications, create an application, add a Bot user, copy the Bot Token, and copy your Target Channel ID.',
     },
     {
       id: 'slack',
@@ -536,6 +545,7 @@ export default function IntegrationsPanel() {
       action: toggle('slack'),
       actionLabel: tf('slack') ? 'Close Panel' : 'Configure',
       isExpanded: tf('slack'),
+      guide: 'Create an app at api.slack.com/apps, install it to your workspace with "chat:write" scopes, and copy the Bot User OAuth Token.',
     },
     {
       id: 'whatsapp',
@@ -550,6 +560,7 @@ export default function IntegrationsPanel() {
       actionLabel: tf('whatsapp') ? 'Close Panel' : 'Configure',
       isExpanded: tf('whatsapp'),
       badge: 'Business API',
+      guide: 'Go to developers.facebook.com, add WhatsApp to your application, and copy your Phone Number ID and Permanent Access Token.',
     },
     // ── Developer & Automation ──
     {
@@ -564,6 +575,7 @@ export default function IntegrationsPanel() {
       action: toggle('github'),
       actionLabel: tf('github') ? 'Close Panel' : 'Configure',
       isExpanded: tf('github'),
+      guide: 'Go to GitHub Settings > Developer Settings > Personal Access Tokens (Classic or Fine-grained), and generate a token with repo permissions.',
     },
     {
       id: 'browser',
@@ -578,6 +590,7 @@ export default function IntegrationsPanel() {
       actionLabel: tf('browser') ? 'Close Panel' : 'Configure',
       isExpanded: tf('browser'),
       badge: 'Playwright · Browserbase',
+      guide: 'Local Playwright runs out-of-the-box. For cloud sessions, sign up at browserbase.com, and copy your API Key and Project ID.',
     },
     // ── Media & Utilities ──
     {
@@ -592,6 +605,7 @@ export default function IntegrationsPanel() {
       action: toggle('spotify'),
       actionLabel: tf('spotify') ? 'Close Panel' : 'Configure',
       isExpanded: tf('spotify'),
+      guide: 'Create an app at developer.spotify.com/dashboard, and copy your Client ID and Client Secret from the App Dashboard Settings page.',
     },
     {
       id: 'weather',
@@ -606,6 +620,7 @@ export default function IntegrationsPanel() {
       actionLabel: tf('weather') ? 'Close Panel' : 'Configure',
       isExpanded: tf('weather'),
       badge: 'OpenWeatherMap',
+      guide: 'Sign up on openweathermap.org, navigate to your Member Account Dashboard, and copy your API Key from the "My API Keys" tab.',
     },
   ]
 
@@ -628,7 +643,7 @@ export default function IntegrationsPanel() {
         .integration-card {
           transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
           position: relative;
-          overflow: hidden;
+          overflow: visible;
         }
         .integration-card::before {
           content: '';
@@ -642,6 +657,7 @@ export default function IntegrationsPanel() {
         .integration-card:hover {
           transform: translateY(-3px);
           box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+          z-index: 10;
         }
         .integration-card:hover::before {
           opacity: 1;
@@ -703,7 +719,16 @@ export default function IntegrationsPanel() {
         .form-save-btn:hover {
           background: rgba(112,112,125,0.2) !important;
           border-color: rgba(112,112,125,0.3) !important;
-          transform: translateY(-1px);
+        }
+        .integration-tooltip-wrapper:hover .tooltip-content {
+          opacity: 1 !important;
+          pointer-events: auto !important;
+          transform: translateY(-4px) !important;
+        }
+        .tooltip-trigger:hover {
+          border-color: rgba(82, 102, 235, 0.6) !important;
+          color: var(--color-starlight) !important;
+          background: rgba(82, 102, 235, 0.1);
         }
         .cards-grid {
           display: grid;
@@ -924,28 +949,80 @@ export default function IntegrationsPanel() {
                       card.icon
                     )}
                   </div>
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '5px',
-                      background: isActive ? 'rgba(52,211,153,0.08)' : 'rgba(112,112,125,0.06)',
-                      border: `1px solid ${isActive ? 'rgba(52,211,153,0.15)' : 'rgba(112,112,125,0.1)'}`,
-                      padding: '2px 8px',
-                      borderRadius: '100px',
-                    }}
-                  >
-                    <StatusIndicator active={isActive} />
-                    <span
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <div
                       style={{
-                        fontSize: '9px',
-                        color: isActive ? '#34d399' : 'var(--color-lead)',
-                        fontWeight: 600,
-                        letterSpacing: '0.02em',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '5px',
+                        background: isActive ? 'rgba(52,211,153,0.08)' : 'rgba(112,112,125,0.06)',
+                        border: `1px solid ${isActive ? 'rgba(52,211,153,0.15)' : 'rgba(112,112,125,0.1)'}`,
+                        padding: '2px 8px',
+                        borderRadius: '100px',
                       }}
                     >
-                      {isActive ? 'Active' : 'Inactive'}
-                    </span>
+                      <StatusIndicator active={isActive} />
+                      <span
+                        style={{
+                          fontSize: '9px',
+                          color: isActive ? '#34d399' : 'var(--color-lead)',
+                          fontWeight: 600,
+                          letterSpacing: '0.02em',
+                        }}
+                      >
+                        {isActive ? 'Active' : 'Inactive'}
+                      </span>
+                    </div>
+
+                    {card.guide && (
+                      <div className="integration-tooltip-wrapper" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                        <span
+                          className="tooltip-trigger"
+                          style={{
+                            width: '16px',
+                            height: '16px',
+                            borderRadius: '50%',
+                            border: '1px solid rgba(112,112,125,0.3)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '9px',
+                            fontWeight: 600,
+                            color: 'var(--color-lead)',
+                            cursor: 'help',
+                            transition: 'all 0.2s',
+                          }}
+                        >
+                          i
+                        </span>
+                        <div
+                          className="tooltip-content"
+                          style={{
+                            position: 'absolute',
+                            bottom: '100%',
+                            right: 0,
+                            transform: 'translateY(-8px)',
+                            background: 'rgba(20, 20, 30, 0.95)',
+                            border: '1px solid rgba(82, 102, 235, 0.3)',
+                            borderRadius: '8px',
+                            padding: '10px 12px',
+                            width: '220px',
+                            fontSize: '11px',
+                            color: 'var(--color-starlight)',
+                            boxShadow: '0 8px 24px rgba(0,0,0,0.5)',
+                            backdropFilter: 'blur(12px)',
+                            lineHeight: 1.4,
+                            zIndex: 100,
+                            whiteSpace: 'normal',
+                            pointerEvents: 'none',
+                            opacity: 0,
+                            transition: 'opacity 0.2s ease, transform 0.2s ease',
+                          }}
+                        >
+                          {card.guide}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 

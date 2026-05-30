@@ -161,7 +161,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
           <div className="landing-nav-brand">
             <div className="mercury-sidebar-logo" style={{ overflow: 'hidden' }}>
               <video
-                src="/icon.mp4"
+                src="/cutie%20bot.mp4"
                 autoPlay
                 loop
                 muted
@@ -215,7 +215,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
               }}
             >
               <video
-                src="/icon.mp4"
+                src="/cutie%20bot.mp4"
                 autoPlay
                 loop
                 muted
@@ -344,7 +344,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
                                 }}
                               >
                                 <video
-                                  src="/icon.mp4"
+                                  src="/cutie%20bot.mp4"
                                   autoPlay
                                   loop
                                   muted
@@ -397,7 +397,7 @@ export default function LandingPage({ onLoginSuccess }: LandingPageProps) {
                           <div className="screen-auth-header">
                             <div className="screen-auth-logo" style={{ overflow: 'hidden' }}>
                               <video
-                                src="/icon.mp4"
+                                src="/cutie%20bot.mp4"
                                 autoPlay
                                 loop
                                 muted
